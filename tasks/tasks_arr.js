@@ -37,6 +37,7 @@ var missingNumber = function (nums) {
 
 	//! используем формулу суммирования Гаусса
   const expectedSum = (n * (n + 1)) / 2;
+	console.log(expectedSum)
 	//! инициализируем актуальное число
   let actualSum = 0;
 
@@ -60,15 +61,22 @@ console.log(missingNumber([3,0,1]))
 //? (Arrays)
 
 var findDisappearedNumbers = function(nums) {
-	let n = nums.length;
+	//! получаем число элемнтов в массиве nums
+  const n = nums.length;
+	//! создаем колекцию | множество | set и передаем массив чисел Так мы избаляемся от повторяющихся чисел 
 	let set = new Set(nums);
+	//! пустой массив
 	let array = [];
+	//! цикл арентируется на чило элентов в массиве nums
 	for (let i = 1; i <= n; i++) {
+			console.log(i)
+			//! если в колекции нет числа 
 			if (!set.has(i)) {
+				//! добавляем в массив индекс 
 				 array.push(i);
 			}
 	}
-	return set;
+	return array;
 };
 
 console.log(findDisappearedNumbers([4,3,2,7,8,2,3,1])) // [5, 6]
@@ -79,7 +87,7 @@ console.log(findDisappearedNumbers([1,1])) // [2]
 // 136. Single Number
 
 //? В непустом массиве целых чисел nums каждый элемент встречается дважды, кроме одного. Найди ту единственную. 
-//? Вы должны реализовать решение с линейной сложностью времени выполнения и использовать только постоянное дополнительное пространство.
+//? Вы должны реализовать решение с линейной сложностью времени выполнения и использовать только постоянное дополнительное пространство (простую переменную).
 //? (Arrays, Bit Manipulation)
 
 var singleNumber = function(nums) {
@@ -88,7 +96,7 @@ var singleNumber = function(nums) {
 	//! Проведите все элементы через цикл...
 	for (let i = 0; i < nums.length; i++) {
 			//! Концепция исключающего ИЛИ...
-			uniqNum = uniqNum ^ nums[i];
+			uniqNum = uniqNum ^ nums[i]; //? Bit Manipulation
 	} return uniqNum; //! Возвращаем уникальный номер...
 };
 
@@ -107,19 +115,23 @@ console.log(singleNumber([1])) // 1
 //? элементы с индексами от n до 2 * n - 1 (включительно) должны формировать вторую строку построенного двумерного массива, и так далее.
 
 //? Возвращает двумерный массив m x n, построенный в соответствии с описанной выше процедурой, или пустой двумерный массив, если это невозможно.
+//? original = массив чисел | m = число столбцов | n = число элемнтов в столбце
 //? (Arrays)
 
 var construct2DArray = function(original, m, n) {
-	if(m * n !== original.length) return []
+	//! если количиство строк и столбцов !== числу элемнтов в массиве original
+	if(m * n !== original.length) return [] //! возвращаем пустой массив
+	//! иницилизируем пустой массив
 	let result = []
-	
+	//! цекл работает оринтируясь на чило элемнтов в столбце
 	for(let i = 0; i < original.length; i+=n){
-			result.push(original.slice(i,n + i))
+		//! пушим в массив числа используя метод slice для выбора нужного количество элемнов в массиве
+		result.push(original.slice(i,n + i))
 	}
 	
 	return result
 };
-
+console.log(construct2DArray([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], 4, 4)) // [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
 console.log(construct2DArray([1,2,3,4], 2, 2)) // [[1,2],[3,4]]
 console.log(construct2DArray([1,2,3], 1, 3)) // [[1,2,3]]
 console.log(construct2DArray([1,2], 1, 1)) // []
@@ -137,7 +149,9 @@ let moveZeroes = function (nums) {
 	let low = 0;
 	let high = low + 1;
 
+	//! если высота <= числу элемнтов в массиве - 1
 	while (high <= nums.length - 1) {
+		console.log(low, high)
 			if (nums[low] !== 0) {
 					low++;
 					high++;
@@ -154,4 +168,39 @@ let moveZeroes = function (nums) {
 console.log(moveZeroes([0,1,0,3,12])) // [1,3,12,0,0]
 console.log(moveZeroes([0])) // [0]
 
+//! --------------------------------------------------------------------------------------------------------------------
+
+var moveZeroes1 = function(nums) {
+	//! левый укозатель
+  let left = 0;
+	//! правый укозатель
+  let right = 0;
+
+	//! если левый укозатель < nums.length
+  while(left < nums.length){
+		// console.log(nums)
+      if(nums[left] !== 0){
+          [nums[left], nums[right]] = [nums[right], nums[left]];
+					console.log([nums[left], nums[right]] = [nums[right], nums[left]])
+          right++
+        }
+
+        left++
+    }
+		return nums
+};
+
+console.log(moveZeroes1([0,1,0,3,12])) // [1,3,12,0,0]
+console.log(moveZeroes1([0])) // [0]
+
 //! ====================================================================================================================
+
+// 238. Product of Array Except Self
+
+//? Учитывая целочисленный массив nums, вернуть такой массив ответа, что answer[i] равен произведению всех элементов nums, 
+//? кроме nums[i]. Произведение любого префикса или суффикса чисел гарантированно соответствует 32-битному целому числу. 
+//? Вы должны написать алгоритм, который работает за время O(n) и не использует операцию деления.
+
+var productExceptSelf = function(nums) {
+  
+};
