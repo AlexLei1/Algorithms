@@ -175,16 +175,14 @@ var moveZeroes1 = function(nums) {
   let left = 0;
 	//! правый укозатель
   let right = 0;
-
-	//! если левый укозатель < nums.length
+	//! бежим по циклу с условием, если левый укозатель < nums.length
   while(left < nums.length){
-		// console.log(nums)
+
       if(nums[left] !== 0){
           [nums[left], nums[right]] = [nums[right], nums[left]];
-					console.log([nums[left], nums[right]] = [nums[right], nums[left]])
+					console.log(nums)
           right++
         }
-
         left++
     }
 		return nums
@@ -197,10 +195,103 @@ console.log(moveZeroes1([0])) // [0]
 
 // 238. Product of Array Except Self
 
-//? Учитывая целочисленный массив nums, вернуть такой массив ответа, что answer[i] равен произведению всех элементов nums, 
+//? Учитывая целочисленный массив nums, вернуть массив ответа, что answer[i] равен произведению всех элементов nums, 
 //? кроме nums[i]. Произведение любого префикса или суффикса чисел гарантированно соответствует 32-битному целому числу. 
 //? Вы должны написать алгоритм, который работает за время O(n) и не использует операцию деления.
+//? (Arrays)
 
-var productExceptSelf = function(nums) {
-  
+var productExceptSelf = function (nums) {
+	let product = 1;
+	let zeroCount = 0; 
+	for (let num of nums) {
+			//! елси число === 0 инкреминтируем zeroCount || умножаем product на число и запоминаем значение
+			num === 0 ? zeroCount++ : product *= num
+			//! если 0 больше 1
+			if (zeroCount > 1) {
+					//! возвращаем массев 
+					return new Array(nums.length).fill(0)
+			}
+	}
+	//! цикл по массиву nums
+	for (let i in nums) {
+			//! если zeroCount равен 0 
+			if (!zeroCount) {
+					//! записываем в массив (product / nums[i])
+					nums[i] = product / nums[i]
+			}
+			//! если число в массиве не равно 0
+			else if (nums[i] !== 0 ) {
+				//! меняем число на 0
+					nums[i] = 0
+			} else{
+				//! меняем число на product
+					nums[i] = product
+			}
+	}
+	return nums
 };
+
+console.log(productExceptSelf([1,2,3,4])) // [24,12,8,6]
+console.log(productExceptSelf([-1,1,0,-3,3])) // [0,0,9,0,0]
+
+//! ====================================================================================================================
+
+// 287. Find the Duplicate Number
+
+//? Дан массив целых чисел nums, содержащий n + 1 целых чисел, где каждое целое число находится в диапазоне [1, n] включительно. 
+//? В nums есть только одно повторяющееся число, верните это повторяющееся число. 
+//? Вы должны решить проблему, не изменяя массив nums и используя только постоянное дополнительное пространство.
+//? (Arrays, Binary Search, Two Pointers)
+
+function findDuplicate(nums) {
+	let orderedIndex=0;
+	
+	while(orderedIndex < nums.length){
+			
+			if(nums[orderedIndex] !== orderedIndex+1){// because our range from 1 to n
+					let unorderedIndex = nums[orderedIndex]-1;
+					
+					if(nums[orderedIndex]!==nums[unorderedIndex]){
+							[nums[orderedIndex],nums[unorderedIndex]]=[nums[unorderedIndex],nums[orderedIndex]]
+					}else{
+							return nums[orderedIndex]
+					}
+					
+			}else{
+					orderedIndex++;
+			}
+	}
+	return -1
+};
+//! --------------------------------------------------------------------------------------------------------------------
+
+var findDuplicate = function(nums) {
+    
+	let [slow, fast] = [0,0];
+	let check = 0;
+	
+	while( true ){
+		
+		slow = nums[ slow ];
+		fast = nums[ nums[ fast ] ];
+		
+		if( slow == fast ){
+				break;
+		}
+	}
+	
+	while( true ){
+			
+		slow = nums[ slow ];
+		check = nums[ check ];
+		
+		if( slow == check ){
+				break;
+		}
+	}
+	
+	return check;
+	
+};
+console.log(findDuplicate([1,3,4,2,2])) // 2
+console.log(findDuplicate([3,1,3,4,2])) // 3
