@@ -11,11 +11,17 @@
 
 //todo Time O(N) | Space O(N)
 
+//1 проверяем лаличие символов в строке
+//2 функция filterAlphaNumeric - функция все символы переводит к нижнему регистру и убирает все символы кроме букв и цифр
+//3 функция reverse - разворачивает элемнты сроки
+//4 сравнивает строки ? true : false
+
 
 var isPalindrome = function(s) {
     if (!s.length) return true;
     
     const alphaNumeric = filterAlphaNumeric(s);/* Time O(N) | Space O(N) */
+	console.log(alphaNumeric)
     const reversed = reverse(alphaNumeric);    /* Time O(N) | Space O(N) */
     
     return alphaNumeric === reversed;
@@ -39,45 +45,11 @@ console.log(isPalindrome(" ")) // true
 
 //todo Time O(N) | Space O(1)
 
-var isPalindrome = function(s) {
-    if (s.length <= 1) return true;
-    
-    let [left, right] = [0, s.length - 1];
-    let leftChar, rightChar;
-    while (left < right) {
-        leftChar = s[left];
-        rightChar = s[right];
-        
-        // skip char if non-alphanumeric
-        if (!/[a-zA-Z0-9]/.test(leftChar)) {
-            left++;
-        } else if (!/[a-zA-Z0-9]/.test(rightChar)) {
-            right--;
-        } else {
-            // compare letters
-            if (leftChar.toLowerCase() != rightChar.toLowerCase()) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-    }
-    return true;
-};
-
-console.log(isPalindrome("A man, a plan, a canal: Panama")) // true
-console.log(isPalindrome("race a car")) // false
-console.log(isPalindrome(" ")) // true
-
-//!--------------------------------------------------------------------------------------------------------------------
-
-//todo Time O(N) | Space O(1)
-
 var isPalindrome = function (s) {
 	const isAlphaNumeric = c => (c.toLowerCase() >= 'a' && c.toLowerCase() <= 'z') || c >= '0' && c <= '9'
   
-	let left = 0;
-	let right = s.length - 1;
+	let [left, right] = [0, s.length - 1];
+
 	let skipLeft, skipRight, endsEqual = false;
 	
 	while (left < right) {

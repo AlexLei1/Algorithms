@@ -44,6 +44,8 @@ console.log(containsDuplicate([1,2,3,4])) // false
 
 //!--------------------------------------------------------------------------------------------------------------------
 
+//todo Time O(N * log(N)) | Space O(1)
+
 var containsDuplicate = (nums) => {
     nums.sort((a, b) => a - b);/* Time O(N * log(N)) | Space O(1 || log(N)) */
 
@@ -66,6 +68,8 @@ console.log(containsDuplicate([1,2,3,4])) // false
 
 //!--------------------------------------------------------------------------------------------------------------------
 
+//todo Time O(N) | Space O(N)
+
 var containsDuplicate = (nums) => {
     const numsSet = new Set(nums);/* Time O(N) | Space O(N) */
     const isEqual = numsSet.size === nums.length;
@@ -78,11 +82,14 @@ console.log(containsDuplicate([1,2,3,4])) // false
 
 //!--------------------------------------------------------------------------------------------------------------------
 
-var containsDuplicate = (nums, numsSet = new Set()) => {
-    for (const num of nums) {/* Time O(N) */
-        if (numsSet.has(num)) return true;
+//todo Time O(N) | Space O(N)
 
-        numsSet.add(num);       /* Space O(N) */
+var containsDuplicate = (nums) => {
+	let set = new Set()
+    for (const num of nums) {/* Time O(N) */
+        if (set.has(num)) return true;
+
+        set.add(num);       /* Space O(N) */
     }
 
     return false;
@@ -96,25 +103,10 @@ var containsDuplicate = (nums, numsSet = new Set()) => {
 //todo (Arrays)
 //! ====================================================================================================================
 
-var isAnagram = function(s, t) {
-	if(s === t){
-		return true
-	}
-
-	if (s.length === t.length){
-		let str1 = s.split('').sort().join('')
-		let str2 = t.split('').sort().join('')
-		if (str1 === str2) return true
-	}
-	return false
-};
-
-console.log(isAnagram("anagram", "nagaram"))
-console.log(isAnagram("rat", "car"))
-
-//!--------------------------------------------------------------------------------------------------------------------
-
 //todo Time O(N * logN) | Space O(N)
+//1 - сравниваем длину строк между собой 
+//2 - функция reorder - символы в строке переставляет в алфовитном порядке
+//3 - сравниваем строки между собой
 
 var isAnagram = (s, t) => {
     const isEqual = s.length === t.length;
@@ -124,26 +116,35 @@ var isAnagram = (s, t) => {
     .split('')                         /* Time O(N)          | Space O(N) */
     .sort((a, b) => a.localeCompare(b))/* Time O(N * log(N)) | Space O(1 || log(N)) */
     .join(''); 
+	console.log(reorder(s), reorder(t))
 
     return reorder(s) === reorder(t); /* Time O(N * logN) | Space O(N) */
 };
 
-  
 
-console.log(isAnagram("anagram", "nagaram"))
-console.log(isAnagram("rat", "car"))
+console.log(isAnagram("anagram", "nagaram")) // true
+console.log(isAnagram("rat", "car")) // false
 
 
 //!--------------------------------------------------------------------------------------------------------------------
 
 //todo  Time O(N) | Space O(1)
+//1 - иницилизируем hash 
+//2 - сравниваем длину строк между собой
+//3 - функция addFrequency записывае в map символ => количество++
+//4 - функция subtractFrequency проверяет в map символ => количество--
+//5 - функция checkFrequency проверяет каждый символ => количество === 0  ? true : false
 
-var isAnagram = (s, t, map = new Map()) => {
+var isAnagram = (s, t) => {
+	let map = new Map()
+
     const isEqual = s.length === t.length;
     if (!isEqual) return false;
 
     addFrequency(s, map);      /* Time O(N) | Space O(1) */
+	console.log(map)
     subtractFrequency(t, map); /* Time O(N) | Space O(1) */
+	console.log(map)
 
     return checkFrequency(map);/* Time O(N) */
 };
@@ -151,32 +152,26 @@ var isAnagram = (s, t, map = new Map()) => {
 const addFrequency = (str, map) => {
     for (const char of str) {/* Time O(N) */
         const count = (map.get(char) || 0) + 1;
-
         map.set(char, count);   /* Space O(1) */
     }
 }
-
 const subtractFrequency = (str, map) => {
     for (const char of str) {/* Time O(N) */
         if (!map.has(char)) continue;
-
         const count = map.get(char) - 1;
-
         map.set(char, count);   /* Space O(1) */
     }
 };
-
 const checkFrequency = (map) => {
     for (const [ char, count ] of map) {/* Time O(N) */
         const isEmpty = count === 0;
         if (!isEmpty) return false;
     }
-
     return true;
 }
 
-console.log(isAnagram("anagram", "nagaram"))
-console.log(isAnagram("rat", "car"))
+console.log(isAnagram("anagram", "nagaram")) // true
+console.log(isAnagram("rat", "car")) // false
 
 //! ====================================================================================================================
 //* 1. Two Sum
@@ -188,13 +183,19 @@ console.log(isAnagram("rat", "car"))
 //todo (Arrays)
 //! ====================================================================================================================
 
+//todo Time O(N) | Space O(N)
+//1 создаем колекцию map
+//2 бежим по массиву nums 
+	//2.1 получаем разницу чиса 
+	//2.2 проверяем в колекции на наличеи ключа ? возвращаем массив : добавляем в колекцию разниуц => index
+
 var twoSum = function(nums, target) {
 	let map = new Map()
 
-	for(let i=0;i<nums.length; i++){
+	for(let i = 0;i < nums.length; i++){
 		let difference = target - nums[i] 
 		if(map.has(nums[i])){
-			return [map.get(nums[i] ), i]
+			return [map.get(nums[i]), i]
 		}
 		map.set(difference, i)
 	} 
@@ -298,10 +299,10 @@ console.log(twoSum([3,3], 6)) // [0,1]
 var groupAnagrams = function(strs) {
     const map = new Map();
     for (let str of strs) {
-    let curr = [...str].sort().join('');
-    if (!map.has(curr)) map.set(curr, []);
-    map.get(curr).push(str);
-  }
+		let curr = [...str].sort().join('');
+		if (!map.has(curr)) map.set(curr, []);
+		map.get(curr).push(str);
+  	}
   return Array.from(map.values());
 };
 
@@ -313,7 +314,24 @@ console.log(groupAnagrams(["a"])) // [["a"]]
 
 //todo Time O(N * (K * log(K))) | Space O(N * K)
 
-var groupAnagrams = (words, map = new Map()) => {
+//1 иницилизируем колекцию
+//2 проверяем массив на наличие строк и возвращаем пустрой массив при отсутствии строк в массиве
+//3 функция groupWords - записывает в колекцию ключ = строке и массив = похожй на строку 
+	//3.1 бежит по всем строкам
+	//3.2 использует функцию reorder
+	//3.3 полечает массив из колекции || создаем пустой массив
+	//3.4 дабавляем строку в массив
+	//3.5 записываем в колекцию  строку и массив
+//4 функця reorder - переставляет символы в алфовитном порядке
+	//4.1 превращает строку в массив
+	//4.2 переставляет символы в алфовитном порядке
+	//4.3 соеденяет сиволы в строку
+//5 groupWords(words, map)
+//6 return массив с полученными данными в колекции
+
+var groupAnagrams = (words) => {
+	let map = new Map()
+	
     if (!words.length) return [];
 
     groupWords(words, map);    /* Time O(N * (K * log(K)) | Space O(N * K) */
@@ -345,7 +363,33 @@ console.log(groupAnagrams(["a"])) // [["a"]]
 
 //todo Time O(N * K) | Space O(N * K)
 
-var groupAnagrams = (words, map = new Map()) => {
+//1 иницилизируем колекцию
+//2 проверяем массив на наличие строк и возвращаем пустрой массив при отсутствии строк в массиве
+//3 функция groupWords 
+	//3.1 бежит по всем строкам
+	//3.2 использует функцию getHash
+	//3.3 полечает массив из колекции || создаем пустой массив
+	//3.4 дабавляем строку в массив
+	//3.5 записываем в колекцию строку и массив
+
+//4 функция getHash 
+	//4.1 создаем массив с 26 нулями 
+	//4.2 бежим по символам в строке 
+	//4.3 используем функцию getCode
+	//4.4 инкриментируем символ в массиве
+	//4.5 используем функцию buildHash
+
+//5 функция getCode 
+	//5.1 получаем символ
+	//5.2 используем метод charCodeAt(0) для получения числа с позицией символа в алфовите
+
+//6 функция buildHash
+	//6.1 получаем массив
+	//6.2 с помощю метода toString превращаем символы массива в строку
+
+var groupAnagrams = (words) => {
+	map = new Map()
+
     if (!words.length) return [];
 
     groupWords(words, map);    /* Time O(N * K) | Space O(N * K) */
@@ -394,16 +438,32 @@ console.log(groupAnagrams(["a"])) // [["a"]]
 
 //todo Time O(NlogN) | Space O(N)
 
+//1 инициализируем обьект
+//2 бежим по массиву nums 
+	//2.1 если в обьекте присутствует value по key ? value++ || value = 1
+//3 инициализируем result = массив с масивами === [key, value] (превращаем обьект в массив)
+//4 сортируем result
+//5 инициализируем output = массив
+//6 бежим по циклу k раз
+	//6.1 пушим в output key из отсортированного result
+//7 возвращаем output
+
 var topKFrequent = function(nums, k) {
     let frequency = {}
-    for( let i = 0; i < nums.length; i++){
-        if(frequency.hasOwnProperty(nums[i])) frequency[nums[i]] += 1;
-        else frequency[nums[i]] = 1;
+    for( let num of nums){
+        if(frequency.hasOwnProperty(num)) {
+			frequency[num] += 1;
+		} else {
+			frequency[num] = 1;
+		}
     }
+
     let result = Object.keys(frequency).map((key) => [Number(key), frequency[key]]);
+
     let sortedResult = result.sort((a,b) => {
         return b[1]-a[1]
     })
+
     let output = []
     for ( let i = 0; i < k; i++){
         output.push(sortedResult[i][0])
@@ -419,35 +479,36 @@ console.log(topKFrequent([1], 1)) // [1]
 //todo Time O(N) | Space O(k)
 
 var topKFrequent = function(nums, k) {
-    const mp = new Map();
+    const map = new Map();
     const arr = new Array(nums.length + 1).fill(0);
-    const ans = [];
+    const result = [];
 
-    nums.forEach(el => {
-        const val = mp.get(el) || 0;
-        mp.set(el, val + 1);
+    nums.forEach(num => {
+        const val = map.get(num) || 0;
+        map.set(num, val + 1);
     });
 
-    for ( let [key, value] of mp ) {
+    for ( let [key, value] of map ) {
         const prev = arr[value] || [];
         prev.push(key);
         arr[value] = prev;
     }
-
-
+	console.log(arr)
     arr.reverse();
-    for (let el of arr) {
+	console.log(arr)
+
+    for (let arrNum of arr) {
         if (k < 1) break;
-        if (el) {
-            for (let el2 of el) {
+        if (arrNum) {
+            for (let num of arrNum) {
                 if (k < 1) break;
-                ans.push(el2);
+                result.push(num);
                 k--;
             }
         }
     }
 
-    return ans;
+    return result;
 };
 
 console.log(topKFrequent([1,1,1,2,2,3], 2)) // [1,2]
@@ -456,7 +517,7 @@ console.log(topKFrequent([1], 1)) // [1]
 //! ====================================================================================================================
 //* 238. Product of Array Except Self
 
-//todo Учитывая целочисленный массив nums, вернуть такой массив ответа, что answer[i] равен произведению всех элементов nums, кроме nums[i].
+//todo Учитывая целочисленный массив nums, вернуть массив ответа, что answer[i] равен произведению всех элементов nums, кроме nums[i].
 
 //todo Произведение любого префикса или суффикса чисел гарантированно соответствует 32-битному целому числу.
 
@@ -467,20 +528,29 @@ console.log(topKFrequent([1], 1)) // [1]
 
 //todo Time O(N) | Space O(N)
 
+//1 инициализируем массив result = []
+//2 инициализируем prefix = 1
+//3 инициализируем postfix = 1
+//4 бежим по массиву nums
+	//4.1 дабавляем в result = prefix
+	//4.2 prefix = prefix * num
+//5
+
 function productExceptSelf(nums) {
-    const result = [];
-    let prefix = 1;
-    let postfix = 1;
+    const result = []; // [1, 1, 2, 6]
+    let prefix = 1; 
+    let postfix = 1; 
     
     for (let i = 0; i < nums.length; i++) {
         result[i] = prefix;
         prefix *= nums[i];
     }
+
     for (let i = nums.length - 2; i >= 0; i--) {
         postfix *= nums[i + 1];
+		console.log(postfix, i)
         result[i] *= postfix;
     }
-    
     return result;
 };
 
@@ -504,6 +574,24 @@ console.log(productExceptSelf([-1,1,0,-3,3])) // [0,0,9,0,0]
 
 //todo Time O(ROWS * COLS) | Space O(ROWS * COLS)
 
+//1 инициализируем doards = 3
+//2 функция boards
+	//2.1 инициализируем массив [9, 9]
+	//2.2 return массив 
+	//2.3
+	//2.4
+	//2.5
+//3 функция initBoard
+	//3.1
+	//3.2
+	//3.3
+//4 функция searchGrid
+	//4.1 бежим по матрице board
+	//4.2 	
+	//4.3
+//5
+//6
+
 var isValidSudoku = (board) => {
     const boards = 3;
     const [ boxes, cols, rows ] = getBoards(boards);/* Time O(ROWS * COLS) | Space O(ROWS * COLS) */
@@ -511,15 +599,15 @@ var isValidSudoku = (board) => {
     return searchGrid(board, boxes, cols, rows);    /* Time O(ROWS * COLS) | Space O(ROWS * COLS) */
 };
 
-var initBoard = (rows, cols) => new Array(rows).fill()
-    .map(() => new Array(cols).fill(false));
-
 var getBoards = (boards) => {
     const [ rows, cols ] = [ 9, 9 ];
 
     return new Array(boards).fill()
         .map(() => initBoard(rows, cols))
 }
+var initBoard = (rows, cols) => new Array(rows).fill()
+    .map(() => new Array(cols).fill(false));
+
 
 var searchGrid = (board, boxes, cols, rows) => {
     const [ _rows, _cols ] = [ 9, 9 ];
@@ -528,6 +616,7 @@ var searchGrid = (board, boxes, cols, rows) => {
         for (let col = 0; col < _cols; col++) {/* Time O(COLS)*/
             const char = board[row][col];
             const index = (Math.floor(row / 3) * 3) + Math.floor(col / 3);
+			console.log(index)
 
             const isEmpty = char === '.';
             if (isEmpty) continue;
@@ -553,7 +642,7 @@ console.log(isValidSudoku([["5","3",".",".","7",".",".",".","."]
 						  ,["7",".",".",".","2",".",".",".","6"]
 						  ,[".","6",".",".",".",".","2","8","."]
 						  ,[".",".",".","4","1","9",".",".","5"]
-						  ,[".",".",".",".","8",".",".","7","9"]])) // false
+						  ,[".",".",".",".","8",".",".","7","9"]])) // true
 
 console.log(isValidSudoku([["8","3",".",".","7",".",".",".","."]
 						  ,["6",".",".","1","9","5",".",".","."]
@@ -563,7 +652,7 @@ console.log(isValidSudoku([["8","3",".",".","7",".",".",".","."]
 						  ,["7",".",".",".","2",".",".",".","6"]
 						  ,[".","6",".",".",".",".","2","8","."]
 						  ,[".",".",".","4","1","9",".",".","5"]
-						  ,[".",".",".",".","8",".",".","7","9"]])) // true
+						  ,[".",".",".",".","8",".",".","7","9"]])) // false
 
 //!--------------------------------------------------------------------------------------------------------------------
 
@@ -611,7 +700,7 @@ console.log(isValidSudoku([["5","3",".",".","7",".",".",".","."]
 						  ,["7",".",".",".","2",".",".",".","6"]
 						  ,[".","6",".",".",".",".","2","8","."]
 						  ,[".",".",".","4","1","9",".",".","5"]
-						  ,[".",".",".",".","8",".",".","7","9"]])) // false
+						  ,[".",".",".",".","8",".",".","7","9"]])) // true
 
 console.log(isValidSudoku([["8","3",".",".","7",".",".",".","."]
 						  ,["6",".",".","1","9","5",".",".","."]
@@ -621,11 +710,10 @@ console.log(isValidSudoku([["8","3",".",".","7",".",".",".","."]
 						  ,["7",".",".",".","2",".",".",".","6"]
 						  ,[".","6",".",".",".",".","2","8","."]
 						  ,[".",".",".","4","1","9",".",".","5"]
-						  ,[".",".",".",".","8",".",".","7","9"]])) // true
+						  ,[".",".",".",".","8",".",".","7","9"]])) // false
 
 //! ====================================================================================================================
 //* 128. Longest Consecutive Sequence
-
 
 //todo Учитывая несортированный массив целых чисел nums, вернуть длину самой длинной последовательности последовательных элементов.
 
@@ -641,90 +729,28 @@ var longestConsecutive = function(nums) {
 console.log(longestConsecutive([100,4,200,1,3,2])) // 4
 console.log(longestConsecutive([0,3,7,2,5,8,4,6,0,1])) // 9
 
-//!--------------------------------------------------------------------------------------------------------------------
-
-//todo Time O (N^3) | Space O(1)
-
-var longestConsecutive = (nums, maxScore = 0) => {
-    for (const num of nums) {/* Time O(N) */
-        let [ currNum, score ] = [ num, 1 ];
-
-        while (isStreak(nums, (currNum + 1))) {/* Time O(N * N) */
-            currNum++;
-            score++;
-        }
-
-        maxScore = Math.max(maxScore, score);
-    }
-
-    return maxScore;
-}
-
-const isStreak = (nums, num) => {
-    for (let i = 0; i < nums.length; i++) {/* Time O(N) */
-        const isEqual = nums[i] === num
-        if (isEqual) return true;
-    }
-
-    return false;
-}
-
-console.log(longestConsecutive([100,4,200,1,3,2])) // 4
-console.log(longestConsecutive([0,3,7,2,5,8,4,6,0,1])) // 9
-
-//!--------------------------------------------------------------------------------------------------------------------
-
-//todo Time O (N * log(N)) | Space O(1)
-
-var longestConsecutive = (nums) => {
-    if (!nums.length) return 0;
-
-    nums.sort((a, b) => a - b);/* Time O(N * log(N)) | Space O(1 || log(N)) */
-
-    return search(nums);       /* Time O(N) */
-}
-
-const search = (nums) => {
-    let [ maxScore, score ] = [ 1, 1 ];
-
-    for (let i = 1; i < nums.length; i++) {/* Time O(N) */
-        const isPrevDuplicate = nums[i - 1] === nums[i]
-        if (isPrevDuplicate) continue
-
-        const isStreak = nums[i] === ((nums[i - 1]) + 1)
-        if (isStreak) { score++; continue; }
-
-        maxScore = Math.max(maxScore, score);
-        score = 1;
-    }
-
-    return Math.max(maxScore, score);
-}
-
-console.log(longestConsecutive([100,4,200,1,3,2])) // 4
-console.log(longestConsecutive([0,3,7,2,5,8,4,6,0,1])) // 9
 
 //!--------------------------------------------------------------------------------------------------------------------
 
 //todo Time O (N) | Space O(N)
 
-var longestConsecutive = (nums, maxScore = 0) => {
+var longestConsecutive = (nums) => {
+	let maxScore = 0
     const numSet = new Set(nums);         /* Time O(N) | Space O(N) */
 
     for (const num of [ ...numSet ]) {    /* Time O(N) */
         const prevNum = num - 1;
 
         if (numSet.has(prevNum)) continue;/* Time O(N) */
-
+		
         let [ currNum, score ] = [ num, 1 ];
 
-        const isStreak = () => numSet.has(currNum + 1)
-        while (isStreak()) {              /* Time O(N) */
+        while (numSet.has(currNum + 1)) {              /* Time O(N) */
+
             currNum++;
             score++;
         }
-
-        maxScore = Math.max(maxScore, score);
+        maxScore = score
     }
 
     return maxScore;
