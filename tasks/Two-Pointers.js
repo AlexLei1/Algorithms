@@ -12,7 +12,7 @@
 //todo Time O(N) | Space O(N)
 
 //1 проверяем лаличие символов в строке
-//2 функция filterAlphaNumeric - функция все символы переводит к нижнему регистру и убирает все символы кроме букв и цифр
+//2 функция filterAlphaNumeric - функция все символы переводит к нижнему регистру и убирает все отступы и символы кроме букв и цифр
 //3 функция reverse - разворачивает элемнты сроки
 //4 сравнивает строки ? true : false
 
@@ -45,25 +45,32 @@ console.log(isPalindrome(" ")) // true
 
 //todo Time O(N) | Space O(1)
 
+//1 иницилизируем левый и правый указатели 
+//2 функция isAlphaNumeric - проверяет hash символа на a-z || 0-9
+//3	while left < right
+	//3.1 проверяем символ с левой сотоны если он не является буквой или цифрой ? указатель сдвигаем в право
+	//3.2 проверяем символ с правой сотоны если он не является буквой или цифрой ? указатель сдвигаем в лево
+	//3.3 есил символы не равны return false
+	//3.4 сдвигаем левый указатель в право а правый в лево
+//4 если строка является полиндромом возвращаем true
+
 var isPalindrome = function (s) {
-	const isAlphaNumeric = c => (c.toLowerCase() >= 'a' && c.toLowerCase() <= 'z') || c >= '0' && c <= '9'
-  
 	let [left, right] = [0, s.length - 1];
 
-	let skipLeft, skipRight, endsEqual = false;
+	const isAlphaNumeric = (c) => (c.toLowerCase() >= 'a' && c.toLowerCase() <= 'z') || c >= '0' && c <= '9'
 	
 	while (left < right) {
-	  skipLeft = !isAlphaNumeric(s.charAt(left))
-	  if (skipLeft) { left++; continue; }
-  
-	  skipRight = !isAlphaNumeric(s.charAt(right))
-	  if (skipRight) { right--; continue; }
-  
-	  endsEqual = s.charAt(left).toLowerCase() === s.charAt(right).toLowerCase()
-	  if (!endsEqual) return false
-  
-	  left++
-	  right--
+		let isSkipLeft = !isAlphaNumeric(s.charAt(left))
+		if (isSkipLeft) { left++; continue; }
+	
+		let isSkipRight = !isAlphaNumeric(s.charAt(right))
+		if (isSkipRight) { right--; continue; }
+	
+		let isEndsEqual = s.charAt(left).toLowerCase() === s.charAt(right).toLowerCase()
+		if (!isEndsEqual) return false
+	
+		left++
+		right--
 	}
 	return true
 };
@@ -75,9 +82,9 @@ console.log(isPalindrome(" ")) // true
 //! ====================================================================================================================
 //* 167. Two Sum II - Input Array Is Sorted
 
-//todo Дан массив целых чисел с индексом 1, который уже отсортирован в порядке неубывания,
+//todo Дан массив целых чисел, который уже отсортирован в порядке возрастания и некоторые значения могут быть равны,
 //todo найдите два числа, которые в сумме дают определенное целевое число.
-//todo Пусть эти два числа будут числами[индекс1] и числами[индекс2], где 1 <= индекс1 <индекс2 <числа.длина.
+//todo Пусть эти два числа будут numbers[index1] и numbers[index2], где 1 <= index1 < index2 < numbers.length.
 
 // todo Возвращает индексы двух чисел, index1 и index2, сложенные на единицу, в виде целочисленного массива [index1, index2] длины 2.
 
@@ -88,7 +95,41 @@ console.log(isPalindrome(" ")) // true
 //todo (Two Pointers)
 //! ====================================================================================================================
 
+
+//1 создаем колекцию map
+//2 бежим по массиву nums 
+	//2.1 получаем разницу чиса 
+	//2.2 проверяем в колекции на наличеи ключа ? возвращаем массив с инкрементируемыми индексами: добавляем в колекцию разниуц => index
+
+var twoSum = function(nums, target) {
+	let map = new Map()
+
+	for(let i = 0;i < nums.length; i++){
+		let difference = target - nums[i] 
+		if(map.has(nums[i])){
+			return [map.get(nums[i]) + 1, i + 1]
+		}
+		map.set(difference, i)
+	} 
+};
+
+
+console.log(twoSum([2,7,11,15], 9)) // [1,2]
+console.log(twoSum([2,3,4], 6)) // [1,3]
+console.log(twoSum([-1, 0], -1)) // [1,2]
+
+
+//!--------------------------------------------------------------------------------------------------------------------
+
 //todo Time O(N) | Space O(1)
+
+//1 иницилизируем левый и правый указатели 
+//2 while left < right
+	//2.1 сумируем левый и правый указатель = sum
+	//2.2 елси sum === target ? return [left + 1, right + 1] 
+	//2.3 если sum < target ? левый указатель смещаем в право
+	//2.4 если sum > target ? правый указатель смещаем в лево
+
 
 var twoSum = function (numbers, target) {
     let [left, right] = [0, numbers.length - 1];
@@ -105,8 +146,6 @@ var twoSum = function (numbers, target) {
         const isTargetLess = target < sum;
         if (isTargetLess) right--;
     }
-
-    return [-1, -1];
 };
 
 console.log(twoSum([2,7,11,15], 9)) // [1.2]
@@ -119,8 +158,76 @@ console.log(twoSum([-1, 0], -1)) // [1,2]
 //todo Для массива целых чисел nums вернуть все триплеты [nums[i], nums[j], nums[k]] такие, 
 //todo что i != j, i != k и j != k, и nums[i] + числа [j] + числа [k] == 0.
 
+//todo Обратите внимание, что в наборе решений не должно быть повторяющихся триплетов.
+
 //todo (Two Pointers)
 //! ====================================================================================================================
+
+//1 
+//2 
+//3
+//4
+//5
+
+var threeSum = function(nums) {
+    let quantity = nums.length
+	// let sub = quantity / 3
+	let [left, right] = [0, nums.length - 1]
+	nums.sort((a,b) => a - b) // [-4, -1, -1, 0, 1, 2]
+
+	while(left < right) {
+		
+	}
+ 	// for(let i = 0; i < sub; i++) {
+
+	// }
+
+};
+
+console.log(threeSum([-1,0,1,2,-1,-4])) // [[-1,-1,2],[-1,0,1]]
+console.log(threeSum([0,1,1])) // []
+
+//   V	   		  V
+// [-3, -1, 1, 4, 5]
+//   V	   	   V 
+// [-3, -1, 1, 16, 20]
+//   V	   	V
+// [ 1, -1, 9, 16, 20]
+//   V	 V
+// [ 1, -1, 9, 16, 20]
+//   V	   		  
+// [ 1, 1, 9, 16, 20]
+
+
+var threeSum = function(nums) {
+
+	let [left, right] = [0, nums.length -1]
+
+	while (left <= right) {
+
+		if(Math.abs(nums[left]) <= Math.abs(nums[right])) {
+			nums[right] = Math.abs(nums[right]) * Math.abs(nums[right])
+			right--
+		} else {
+			[nums[left], nums[right]] = [nums[right], nums[left]]
+			nums[right] = Math.abs(nums[right]) * Math.abs(nums[right])
+			right--
+		}
+
+		if (nums[left] === 0) {
+			left++ 
+		}
+		
+		console.log(nums)
+	}
+
+	return nums
+};
+
+console.log(threeSum([-5 -3, -2, -1, 0, 2, 3])) //  [0, 1, 1, 4, 4, 9, 9, 16]
+
+
+//!--------------------------------------------------------------------------------------------------------------------
 
 var threeSum = function(nums) {
     const res = [];
@@ -204,14 +311,14 @@ const getArea = (height, left, right) => {
 console.log(maxArea([1,8,6,2,5,4,8,3,7])) // 49
 console.log(maxArea([1,1])) // 1
 
-//! ====================================================================================================================
+//!====================================================================================================================
 //* 42. Trapping Rain Water
 
 //todo Имея n неотрицательных целых чисел, представляющих карту высот, где ширина каждой полосы равна 1,
 //todo вычислите, сколько воды она может собрать после дождя.
 
 //todo (Two Pointers)
-//! ====================================================================================================================
+//!====================================================================================================================
 
 //todo Time O(n) | Space O(n) 
 
@@ -247,6 +354,7 @@ var trap = function(height) {
     }
 
     return water;
+
 };
 
 
@@ -308,4 +416,4 @@ const getWindows = (height, left, maxLeft, right, maxRight) => {
 console.log(trap([0,1,0,2,1,0,1,3,2,1,2,1])) // 6
 console.log(trap([4,2,0,3,2,5])) // 9
 
-//! ====================================================================================================================
+//!====================================================================================================================
