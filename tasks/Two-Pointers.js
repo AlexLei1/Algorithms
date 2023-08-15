@@ -203,7 +203,7 @@ var threeSum = function(nums) {
 
 	let [left, right] = [0, nums.length -1]
 
-	while (left <= right) {
+	while (left < right) {
 
 		if(Math.abs(nums[left]) <= Math.abs(nums[right])) {
 			nums[right] = Math.abs(nums[right]) * Math.abs(nums[right])
@@ -224,7 +224,7 @@ var threeSum = function(nums) {
 	return nums
 };
 
-console.log(threeSum([-5 -3, -2, -1, 0, 2, 3])) //  [0, 1, 1, 4, 4, 9, 9, 16]
+console.log(threeSum([-5 -3, -2, -1, 0, 2, 3])) 
 
 
 //!--------------------------------------------------------------------------------------------------------------------

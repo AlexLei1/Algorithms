@@ -5,26 +5,25 @@ let count = 0
 
 // Решение с помощью цикла while
 function binarySearch(array, item) {
-    let start = 0
-    let end = array.length // первый элемент массива
-    let middle; 					 // последний элемент массива
-    let found = false    	 // флаг
-    let position = -1			 // позиция элемнта 
+    let start = 0		   	// стартовый индекс массива
+    let end = array.length 	// количество элемнтов в массиве
+    let middle; 		   	// index центрального элемента массива
+    let found = false      	// флаг - нужен для остановки цикла
+    let position = -1	   	// позиция элемнта 
 
     while (found === false && start <= end) {
         count+=1
         middle = Math.floor((start + end) / 2); // высчитываем index центрального элемента
-				// если элемент среднего массива равен 
-        if (array[middle] === item) {
-            found = true // останавливаем цикл
+		console.log(array[middle])		 
+        if (array[middle] === item) {			// если центральный элемент массива === искомому
+            found = true 						// останавливаем цикл
             position = middle 
-            return position; // возвращаем индекс найденого элемента
+            return position; 					// возвращаем индекс найденого элемента
         }
-				// елси искомый элемент меньше центрального
-        if (item < array[middle]) {
-            end = middle - 1
-        } else {
-            start = middle + 1
+        if (item < array[middle]) { 			// елси искомый элемент меньше центрального
+            end = middle - 1					// 
+        } else {								// или же 
+            start = middle + 1					// 
         }
     }
     return position;

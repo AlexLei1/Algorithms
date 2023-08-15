@@ -12,7 +12,7 @@ function linearSearch(array, item) {
     return null
 }
 
-console.log(`indexItem = ${linearSearch(array, 11)}`)
-console.log('count =', count)
+console.log(linearSearch(array, 11))
+console.log(count)
 // Сложность решения = O(n)
 // node 1_linear_search.js
