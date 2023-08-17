@@ -870,7 +870,7 @@ console.log(longestCommonPrefix(["dog","racecar","car"])) // ""
 
 
 //! ====================================================================================================================
-//* 118. Pascal's Triangle https://leetcode.com/problems/pascals-triangle/
+//* 118. Pascals Triangle https://leetcode.com/problems/pascals-triangle/
 
 //todo Учитывая целое число numRows, вернуть первые numRows треугольника Паскаля. 
 //todo В треугольнике Паскаля каждое число является суммой двух чисел непосредственно над ним.
@@ -878,9 +878,40 @@ console.log(longestCommonPrefix(["dog","racecar","car"])) // ""
 //todo (Arrays)
 //! ====================================================================================================================
 
-var generate = function(numRows) {
-    let arr = [[1]]
+//1 иницилизируем пустой arr 
+//2 есил num >= 2 пушим в массив первый и второ элемнт треугольника 
+//3 если num > 2 запускаем цикл 2 < num
+	//3.1 иницилизируем подмассив 
+	//3.2 в подмассив пушим 1
+	//3.3 запускаем цикл по предыдущей ветке триугольника
+		//3.3.1 в подмассив пушим arr[1\2\3\4\...][1\2\3\4\...] + arr[1\2\3\4\...][2\3\4\5\...]
+	//3.4 в подмассив пушим 1
+	//3.4 в массив пушим подмассив
+//4 return  arr
 
+var generate = function(num) {
+    const arr = [];
+    if (num >= 2) {
+      arr.push([1]);
+      arr.push([1, 1]);
+    } else {
+      arr.push([1]);
+    }
+  
+
+    if (num > 2) {
+      for (let i = 2; i < num; i++) {
+        let subArray = [];
+         subArray.push(1);
+        for (let j = 0; j < arr[i - 1].length - 1; j++) {
+          subArray.push(arr[i - 1][j] + arr[i - 1][j + 1]);
+        }
+        subArray.push(1);
+        arr.push(subArray);
+      }
+    }
+  
+    return arr;
 };
 
 console.log(generate(5)) // [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
@@ -902,12 +933,25 @@ console.log(generate(1)) // [[1]]
 //todo (Arrays)
 //! ====================================================================================================================
 
+
+//1 бежим по массиву nums 
+	//2.1 проверяем num === val ? удаляем элемнт по индексу и декрементируем индекс цикла (i--)
+//2 возвращаем длину массива
+
+
 var removeElement = function(nums, val) {
+    for(let i = 0; i < nums.length; i++) {
+        if(nums[i] === val) {
+            nums.splice(i, 1);
+            i--;            
+        }
+    }
     
+    return nums.length;
 };
 
-console.log(removeElement([3,2,2,3], 2)) // 2, [2,2,_,_]
-console.log(removeElement([0,1,2,2,3,0,4,2], 2)) // 5, nums = [0,1,4,0,3,_,_,_]
+console.log(removeElement([3,2,2,3], 3)) // 2
+console.log(removeElement([0,1,2,2,3,0,4,2], 2)) // 5
 
 //! ====================================================================================================================
 //* 205. Isomorphic Strings https://leetcode.com/problems/isomorphic-strings/
@@ -921,8 +965,19 @@ console.log(removeElement([0,1,2,2,3,0,4,2], 2)) // 5, nums = [0,1,4,0,3,_,_,_]
 //todo (Arrays)
 //! ====================================================================================================================
 
+// иницилизируем алфовит
+// бежим по первой строке 
+	// в алфовите указываем солько и какие символы есть в строке
+// бежим по второй строке 
+	// делаем тоже самое 
+// сравниваем алфовиты 
 var isIsomorphic = function(s, t) {
-    
+	let oneChar = ''
+	let twoCgar = ''
+
+    for(let i = 0; i < s.length; i++) {
+		
+	}
 };
 
 console.log(isIsomorphic("egg", "add")) // true
