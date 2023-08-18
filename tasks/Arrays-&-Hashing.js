@@ -965,24 +965,40 @@ console.log(removeElement([0,1,2,2,3,0,4,2], 2)) // 5
 //todo (Arrays)
 //! ====================================================================================================================
 
-// иницилизируем алфовит
-// бежим по первой строке 
-	// в алфовите указываем солько и какие символы есть в строке
-// бежим по второй строке 
-	// делаем тоже самое 
-// сравниваем алфовиты 
-var isIsomorphic = function(s, t) {
-	let oneChar = ''
-	let twoCgar = ''
+//1 если длина строк не равна return false
+//2 иницилизируем колекцию для первой и второй строки
+//3 запускаем цикл по любой из строк
+	//3.1 проверяем наличие буквы в колекции первой строки ? или же добавляем в колекцию первой строки key = s[i] value = t[i]
+		//3.1.1 проверяем значение из колекции первой строки !== текущим значением из второй строки ? return false
+	//3.2 проверяем наличие буквы в колекции второй строки ? или же добавляем в колекцию второй строки key = t[i] value = s[i]
+		//3.2.1 проверяем значение из колекции второй строки !== текущим значением из первой строки ? return false
+//4	return true
 
-    for(let i = 0; i < s.length; i++) {
-		
-	}
+// ГЛАВНОЕ: если буква a = t и t = a других пар у букв не может быть при смене пары return false  (у каждой буквы есть своя пара которая не может измениться)
+var isIsomorphic = function (s, t) {
+    if (s.length !== t.length) return false;
+
+    const mapOne = new Map(); 
+    const mapTwo = new Map();
+
+    for (let i = 0; i < s.length; i++) {
+        if (mapOne.has(s[i])) {
+            if (mapOne.get(s[i]) !== t[i]) return false;
+        } else mapOne.set(s[i], t[i]);
+
+        if (mapTwo.has(t[i])) {
+            if (mapTwo.get(t[i]) !== s[i]) return false;
+        } else mapTwo.set(t[i], s[i]);
+    }
+	console.log(mapOne, mapTwo)
+    return true;
 };
 
+console.log(isIsomorphic("paper", "title")) // true
+console.log(isIsomorphic("badc", "baba")) // false
 console.log(isIsomorphic("egg", "add")) // true
 console.log(isIsomorphic("foo", "bar")) // false
-console.log(isIsomorphic("paper", "title")) // true
+
 
 //! ====================================================================================================================
 //* 605. Can Place Flowers https://leetcode.com/problems/can-place-flowers/
@@ -998,8 +1014,13 @@ console.log(isIsomorphic("paper", "title")) // true
 //todo (Arrays)
 //! ====================================================================================================================
 
+//1 проверяем в какой клуюбе посажены растения в четной или не в четной // не в четной!
+//2 
+//3
+//4
+
 var canPlaceFlowers = function(flowerbed, n) {
-    
+
 };
 
 console.log(canPlaceFlowers([1,0,0,0,1], 1)) // true
