@@ -1015,14 +1015,24 @@ console.log(isIsomorphic("foo", "bar")) // false
 //! ====================================================================================================================
 
 //1 проверяем в какой клуюбе посажены растения в четной или не в четной // не в четной!
-//2 
+//2 бежим по циклу n 
+	//2.1 если в клумбе есть цветок 
+		//2.1.1 если в клумбе 
 //3
 //4
 
 var canPlaceFlowers = function(flowerbed, n) {
-
+	let counter = n
+	for(let i = 2; i < flowerbed.length-1 % 2; i++) {
+		if(counter === 0) return true
+		if(!flowerbed[i-1] && !flowerbed[i+1] && flowerbed[i] === 0) {
+			counter--
+		}
+	}
+	return false
 };
 
+console.log(canPlaceFlowers([1,0,0,0,1,0,1,0,1], 1)) // true
 console.log(canPlaceFlowers([1,0,0,0,1], 1)) // true
 console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 
