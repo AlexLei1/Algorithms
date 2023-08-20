@@ -760,7 +760,7 @@ console.log(longestConsecutive([100,4,200,1,3,2])) // 4
 console.log(longestConsecutive([0,3,7,2,5,8,4,6,0,1])) // 9
 
 //! ====================================================================================================================
-//* 1299. Replace Elements with Greatest Element on Right Side https://leetcode.com/problems/replace-elements-with-greatest-element-on-right-side/
+//* 1299. Replace Elements with Greatest Element on Right Side 
 
 //todo Учитывая массив arr, замените каждый элемент в этом массиве самым большим элементом среди элементов справа от него, 
 //todo а последний элемент замените на -1. После этого верните массив.
@@ -795,8 +795,7 @@ console.log(replaceElements([17,18,5,4,6,1])) // [18,6,6,6,1,-1]
 console.log(replaceElements([400])) // [-1]
 
 //! ====================================================================================================================
-//* 58. Length of Last Word https://leetcode.com/problems/length-of-last-word/
-
+//* 58. Length of Last Word 
 //todo Для заданной строки s, состоящей из слов и пробелов, вернуть длину последнего слова в строке. 
 //todo Слово – это максимальное подстрока состоящая только из не пробельных символов.
  
@@ -833,7 +832,7 @@ console.log(lengthOfLastWord("Hello World")) // 5
 console.log(lengthOfLastWord("luffy is still joyboy")) // 6
 
 //! ====================================================================================================================
-//* 14. Longest Common Prefix https://leetcode.com/problems/longest-common-prefix/
+//* 14. Longest Common Prefix 
 
 //todo Напишите функцию, которая находит самую длинную строку общего префикса среди массива строк. 
 //todo Если общего префикса нет, вернуть пустую строку "".
@@ -870,7 +869,7 @@ console.log(longestCommonPrefix(["dog","racecar","car"])) // ""
 
 
 //! ====================================================================================================================
-//* 118. Pascals Triangle https://leetcode.com/problems/pascals-triangle/
+//* 118. Pascals Triangle 
 
 //todo Учитывая целое число numRows, вернуть первые numRows треугольника Паскаля. 
 //todo В треугольнике Паскаля каждое число является суммой двух чисел непосредственно над ним.
@@ -918,7 +917,7 @@ console.log(generate(5)) // [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 console.log(generate(1)) // [[1]]
 
 //! ====================================================================================================================
-//* 27. Remove Element https://leetcode.com/problems/remove-element/
+//* 27. Remove Element 
 
 //todo Учитывая целочисленный массив nums и целочисленное val, удалите все вхождения val в nums на месте. 
 //todo Порядок элементов может быть изменен. Затем верните количество элементов в nums, которые не равны val.
@@ -954,7 +953,7 @@ console.log(removeElement([3,2,2,3], 3)) // 2
 console.log(removeElement([0,1,2,2,3,0,4,2], 2)) // 5
 
 //! ====================================================================================================================
-//* 205. Isomorphic Strings https://leetcode.com/problems/isomorphic-strings/
+//* 205. Isomorphic Strings 
 
 //todo Имея две строки s и t, определите, изоморфны ли они.
 //todo Две строки s и t изоморфны, если символы в s можно заменить, чтобы получить t.
@@ -1001,7 +1000,7 @@ console.log(isIsomorphic("foo", "bar")) // false
 
 
 //! ====================================================================================================================
-//* 605. Can Place Flowers https://leetcode.com/problems/can-place-flowers/
+//* 605. Can Place Flowers 
 
 //todo У вас есть длинная клумба, в которой часть участков засажена, а часть нет. 
 //todo Однако цветы нельзя сажать на соседних участках.
@@ -1056,7 +1055,7 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 
 
 //! ====================================================================================================================
-//* 169. Majority Element https://leetcode.com/problems/majority-element/
+//* 169. Majority Element 
 
 //todo Учитывая массив nums размера n, вернуть мажоритарный элемент.
 
@@ -1093,7 +1092,7 @@ console.log(majorityElement([3,2,3])) // 3
 console.log(majorityElement([2,2,1,1,1,2,2])) // 2
 
 //! ====================================================================================================================
-//* 496. Next Greater Element I https://leetcode.com/problems/next-greater-element-i/
+//* 496. Next Greater Element I 
 
 
 //todo Следующий больший элемент некоторого элемента x в массиве — это первый больший элемент,
@@ -1117,7 +1116,7 @@ console.log([4,1,2], [1,3,4,2]) // [-1,3,-1]
 console.log([2,4], [1,2,3,4]) // [3,-1]
 
 //! ====================================================================================================================
-//* 724. Find Pivot Index https://leetcode.com/problems/find-pivot-index/
+//* 724. Find Pivot Index 
 
 //todo Учитывая массив целых чисел, вычислить опорный индекс этого массива.
 
