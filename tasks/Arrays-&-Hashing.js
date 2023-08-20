@@ -1014,15 +1014,43 @@ console.log(isIsomorphic("foo", "bar")) // false
 //todo (Arrays)
 //! ====================================================================================================================
 
-//1 проверяем в какой клуюбе посажены растения в четной или не в четной // не в четной!
-//2 
-//3
-//4
+//1 елси n === 0 return true
+//2 бежим по массиву 
+	//2.1 елси n === 0 return true
+	//2.2 елси первый элемнт массива & следующий === 0 ? меняем значение в массиве на 1 & декрементируем n 
+	//2.3 елси последний элемнт массива & предыдущий === 0 ? меняем значение в массиве на 1 & декрементируем n 
+	//2.4 елси предыдущий и следующие и текущий элемнты массива === 0 ? меняем значение в массиве на 1 & декрементируем n
+	//2.5 елси n === 0 return true
+//3 return false
 
 var canPlaceFlowers = function(flowerbed, n) {
 
+	for(let i = 0; i < flowerbed.length; i++) {
+		if(n === 0) return true
+
+		if(i === 0 && !flowerbed[i] && !flowerbed[i+1]) {
+			flowerbed[i] = 1
+			n--
+		}
+		if(i === flowerbed.length-1 && !flowerbed[i] && !flowerbed[i-1]) {
+			flowerbed[i] = 1
+			n--
+		}
+		if(!flowerbed[i-1] && !flowerbed[i+1] && !flowerbed[i]) {
+			flowerbed[i] = 1
+			n--
+		}
+		if(n === 0) return true
+
+	}
+	
+	return false
 };
 
+
+console.log(canPlaceFlowers([0,0,1,0,0], 1)) // true
+console.log(canPlaceFlowers([1,0,1,0,0], 1)) // true
+console.log(canPlaceFlowers([1,0,0,0,0,1], 2)) // false
 console.log(canPlaceFlowers([1,0,0,0,1], 1)) // true
 console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 
@@ -1038,8 +1066,27 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 //todo (Arrays)
 //! ====================================================================================================================
 
+//1 иницилизируем колекцию
+//2 бежим по массиву 
+	//2.1 если в колекции есть ключ по текущему значению в массиве ? инкрементируем значение в колекции || добавляем новый ключ со значением 1
+//3 бежим по колекции 
+	//3.1 если значение > длины массива поделенной на 2 ? return key
+
+
 var majorityElement = function(nums) {
-    
+    let map = new Map()
+	for(let i =0; i < nums.length; i++) {
+		if (map.has(nums[i])) {
+			map.set(nums[i], map.get(nums[i]) + 1)
+		} else {
+			map.set(nums[i], 1)
+		}
+	}
+
+	let num = 0
+	for(let [key, value] of map) {
+		if (value > nums.length / 2) return key
+	}
 };
 
 console.log(majorityElement([3,2,3])) // 3
