@@ -1072,24 +1072,24 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 	//3.1 если значение > длины массива поделенной на 2 ? return key
 
 
-var majorityElement = function(nums) {
-    let map = new Map()
-	for(let i =0; i < nums.length; i++) {
-		if (map.has(nums[i])) {
-			map.set(nums[i], map.get(nums[i]) + 1)
-		} else {
-			map.set(nums[i], 1)
+	var majorityElement = function(nums) {
+		let map = new Map()
+		for(let i =0; i < nums.length; i++) {
+			if (map.has(nums[i])) {
+				map.set(nums[i], map.get(nums[i]) + 1)
+			} else {
+				map.set(nums[i], 1)
+			}
 		}
-	}
-
-	let num = 0
-	for(let [key, value] of map) {
-		if (value > nums.length / 2) return key
-	}
-};
-
-console.log(majorityElement([3,2,3])) // 3
-console.log(majorityElement([2,2,1,1,1,2,2])) // 2
+	
+		let num = 0
+		for(let [key, value] of map) {
+			if (value > nums.length / 2) return key
+		}
+	};
+	
+	console.log(majorityElement([3,2,3])) // 3
+	console.log(majorityElement([2,2,1,1,1,2,2])) // 2
 
 //! ====================================================================================================================
 //* 496. Next Greater Element I 
@@ -1153,3 +1153,4 @@ var findDisappearedNumbers = function(nums) {
 
 console.log(findDisappearedNumbers([4,3,2,7,8,2,3,1])) // [5,6]
 console.log(findDisappearedNumbers([1,1])) // [2]	
+
