@@ -3,17 +3,3 @@
 3. поиск в глубину и ширину - https://habr.com/ru/articles/504374/
 4. скользящее окно - https://digitrain.ru/articles/95913/
 
-var isSubsequence = function(s, t) {
-    
-    for (const letter of s) {
-        const i = t.indexOf(letter);
-        
-        if (i === -1) {
-            return false;
-        }
-        
-        t = t.substr(i + 1);
-    }
-    
-    return true;
-};
