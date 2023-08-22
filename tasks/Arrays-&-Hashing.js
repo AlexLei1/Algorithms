@@ -1064,6 +1064,7 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 
 //todo (Arrays)
 //! ====================================================================================================================
+// O(N + N)
 
 //1 иницилизируем колекцию
 //2 бежим по массиву 
@@ -1074,6 +1075,7 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 
 	var majorityElement = function(nums) {
 		let map = new Map()
+
 		for(let i =0; i < nums.length; i++) {
 			if (map.has(nums[i])) {
 				map.set(nums[i], map.get(nums[i]) + 1)
@@ -1082,7 +1084,6 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 			}
 		}
 	
-		let num = 0
 		for(let [key, value] of map) {
 			if (value > nums.length / 2) return key
 		}
@@ -1108,19 +1109,60 @@ console.log(canPlaceFlowers([1,0,0,0,1], 2)) // false
 //todo (Arrays)
 //! ====================================================================================================================
 
+// O (N + M)
+//1 инициализируем колекцию и записываем в нее nums1  value -> index
+//2 иницилизируем массив result = [...-1 length = nums1]
+//3	инициализируем массив stack
+//4 бижим по массиву nums2
+	//4.1 while если stack не пустой & текущии значение nums2 > предыдущего в stack 
+		//4.1.1 забераем значение с конца массива 
+		//4.1.2 получаем индекс элемнта в nums1 
+		//4.1.3 в массиве result по индексу меняем значение на текущее
+	//4.2 если в nums1 есть значение из nums2 ? пушим его в stack
+//5	return result 	
+
 var nextGreaterElement = function(nums1, nums2) {
     
+    let map = new Map(); { //O(N) 
+        let idx = 0;
+        for(const n of nums1) {
+			map.set(n, idx++);
+		}
+  
+    }
+
+    let res = [];  
+    for(let i = 0; i < nums1.length; i++) { 
+		res.push(-1);
+	} 
+        
+    
+    let stack = [];
+    for(let i = 0; i < nums2.length; i++) { 
+        let cur = nums2[i];
+        
+        while(stack.length > 0 && cur > stack[stack.length - 1]) {
+            let val = stack.pop();
+            let idx = map.get(val);
+            res[idx] = cur;
+        }
+        
+        if(map.has(cur)) stack.push(cur);
+    }
+    
+    return res;
 };
 
-console.log([4,1,2], [1,3,4,2]) // [-1,3,-1]
-console.log([2,4], [1,2,3,4]) // [3,-1]
+console.log(nextGreaterElement([1,3,5,2,4], [6,5,4,3,2,1,7])) // [7,7,7,7,7]
+console.log(nextGreaterElement([4,1,2], [1,3,4,2])) // [-1,3,-1]
+console.log(nextGreaterElement([2,4], [1,2,3,4])) // [3,-1]
 
 //! ====================================================================================================================
 //* 724. Find Pivot Index 
 
 //todo Учитывая массив целых чисел, вычислить опорный индекс этого массива.
 
-//todo Сводной индекс — это индекс, в котором сумма всех чисел строго слева от индекса равна сумме всех чисел строго справа от индекса.
+//todo Опорный индекс — это индекс, в котором сумма всех чисел строго слева от индекса равна сумме всех чисел строго справа от индекса.
 
 //todo Если индекс находится на левом краю массива, то левая сумма равна 0, потому что слева нет элементов. 
 //todo Это также относится к правому краю массива. 
@@ -1139,7 +1181,7 @@ console.log(pivotIndex([1,2,3])) // -1
 console.log(pivotIndex([2,1,-1])) // 0
 
 //! ====================================================================================================================
-//* 448. Find All Numbers Disappeared in an Array https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+//* 448. Find All Numbers Disappeared in an Array 
 
 //todo Учитывая массив nums из n целых чисел, где nums[i] находится в диапазоне [1, n], 
 //todo вернуть массив всех целых чисел в диапазоне [1, n], которые не появляются в nums.
@@ -1147,10 +1189,18 @@ console.log(pivotIndex([2,1,-1])) // 0
 //todo (Arrays)
 //! ====================================================================================================================
 
+//1 инициализируем колекцию с элемнтами от [1, n = nums.length] 0 -> 1, 0 -> 2, 
+//2 инициализируем максимальное чило в массиве
+//3 цикл по массиву
+	// nums.length - num = newNam  
+	// проверяем newNam в колекции ?  : 
+//4
+//5
+
 var findDisappearedNumbers = function(nums) {
 
 }
 
 console.log(findDisappearedNumbers([4,3,2,7,8,2,3,1])) // [5,6]
-console.log(findDisappearedNumbers([1,1])) // [2]	
+console.log(findDisappearedNumbers([1,1,3,4])) // [2]
 
