@@ -1213,24 +1213,53 @@ console.log(["NumArray", "sumRange", "sumRange", "sumRange"] [[[-2, 0, 3, -5, 2,
 
 //1 инициализируем колекцию с элемнтами от [1, n = nums.length] 0 -> 1, 0 -> 3, 0 -> 4,
 //2 инициализируем максимальное чило в массиве
-//3 цикл по массиву
+//3 реверсивный цикл по массиву
 	// nums.length - num = newNam  
-	// проверяем newNam в колекции ?  : 
+	// проверяем newNam в колекции && если newNam !== 0 ? удаляем текущий элемнт в массиве : добавляем новое число в начало массива и добавляем новое число в колекцию
 //4
 //5
 
 var findDisappearedNumbers = function(nums) {
+	let set = new Set() 
+	
+	for(let num of nums) {
+		set.add(num)
+	}
+	let maxNum = nums.length
+	for(let i = nums.length-1; i >= 0; i--) {
+
+		let newNum = maxNum - nums[i] 
+		if(newNum === 0) {
+			if(set.has(maxNum)) {
+				// удаляем текущий элемнт в массиве
+				nums.splice(i, 1)
+			} else {
+				nums.splice(i, 1)
+				nums.push(maxNum)
+				set.add(newNum)
+			}
+
+		} else if (set.has(newNum)) {
+			// удаляем текущий элемнт в массиве
+			nums.splice(i, 1)
+		} else {
+			nums.splice(i, 1)
+			nums.push(newNum)
+			set.add(newNum)
+		}
+	}
+	return nums
 
 }
-
-console.log(findDisappearedNumbers([4,3,2,7,8,2,3,1])) // [5,6]
-console.log(findDisappearedNumbers([1,1,3,4])) // [2]
+console.log(findDisappearedNumbers([1,2,3,3])) // [1,2]
+console.log(findDisappearedNumbers([4,3,2,7,8,2,3,1])) // [4,3,2,7,8,2,3,1]
+console.log(findDisappearedNumbers([1,2,4,4])) // [3]
 
 //! ====================================================================================================================
 //* 1189. Maximum Number of Balloons
 
 //todo Учитывая строковый текст, вы хотите использовать символы текста для формирования как можно большего количества 
-//todo экземпляров слова «воздушный шар».
+//todo экземпляров слова «balloon».
 //todo Каждый символ в тексте можно использовать не более одного раза.
 //todo Возвращает максимальное количество экземпляров, которые можно сформировать.
 
