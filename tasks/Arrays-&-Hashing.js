@@ -1263,15 +1263,44 @@ console.log(findDisappearedNumbers([1,2,4,4])) // [3]
 //todo Каждый символ в тексте можно использовать не более одного раза.
 //todo Возвращает максимальное количество экземпляров, которые можно сформировать.
 
+//todo (Arrays)
+//! ====================================================================================================================
+
+//1 инициализируем строку line = 'balloon'
+//2 инициализируем колекцию и заполняем ее символами line со значением 0 
+//3 бежим по тексу и подсчитываем символы из колекции
+//4 получаем минимальнье число из колекции
+//5 возвращаем минимальное число
+
+
 var maxNumberOfBalloons = function(text) {
-    
+	let line = 'balloon'
+    let map = new Map()
+
+	for(let i = 0; i < line.length; i++){
+		if(map.has(line[i])) {
+			continue
+		} else {
+			map.set(line[i], 0)
+		}
+	
+	}
+
+	for(let i = 0; i < text.length; i++) {
+		if(map.has(text[i])) {
+			map.set(text[i], map.get(text[i]) + 1)
+		}
+	}
+	
+	let min = Math.min(map.get('b'), map.get('a'), map.get('n'), Math.floor(map.get('l') / 2), Math.floor(map.get('o')/2));
+						
+	return min
 };
 
+console.log(maxNumberOfBalloons("balon")) // 0
 console.log(maxNumberOfBalloons("nlaebolko")) // 1
 console.log(maxNumberOfBalloons("loonbalxballpoon")) // 2
 
-//todo (Arrays)
-//! ====================================================================================================================
 //! ====================================================================================================================
 //* 290. Word Pattern
 
