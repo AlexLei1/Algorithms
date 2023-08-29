@@ -989,7 +989,7 @@ var isIsomorphic = function (s, t) {
             if (mapTwo.get(t[i]) !== s[i]) return false;
         } else mapTwo.set(t[i], s[i]);
     }
-	console.log(mapOne, mapTwo)
+
     return true;
 };
 
@@ -1310,10 +1310,37 @@ console.log(maxNumberOfBalloons("loonbalxballpoon")) // 2
 //todo (Arrays)
 //! ====================================================================================================================
 
+//1 иницилизируем две колекции
+//2 строку превращаем в массив с подстроками s.split(' ')
+//3 если длина pattern === sArr.length
+//4 запускаем цикл по длине pattern
+	//4.1 если в первой колекции есть ключ pattern[i] ? если значение ключа !== подстроке ? return false :: записываем значение в колекцию 
+	//4.2 если во второй колекции есть ключ sArr[i] ? если значение ключа !== символу строки ? return false :: записываем значение в колекцию
+//5 return true
+
 var wordPattern = function(pattern, s) {
-    
+	let mapOne = new Map()
+	let mapTwo = new Map()
+	let sArr = s.split(' ')
+
+	if(pattern.length !== sArr.length) {
+		return false
+	}
+
+	for (let i = 0; i < pattern.length; i++) {
+        if (mapOne.has(pattern[i])) {
+            if (mapOne.get(pattern[i]) !== sArr[i]) return false;
+        } else mapOne.set(pattern[i], sArr[i]);
+
+        if (mapTwo.has(sArr[i])) {
+            if (mapTwo.get(sArr[i]) !== pattern[i]) return false;
+        } else mapTwo.set(sArr[i], pattern[i]);
+    }
+
+	return true
 };
 
+console.log(wordPattern("abba", "dog dog dog dog")) // false
 console.log(wordPattern("abba", "dog cat cat dog")) // true
 console.log(wordPattern("abba", "dog cat cat fish")) // false
 console.log(wordPattern("aaaa", "dog cat cat dog")) // false
@@ -1379,14 +1406,32 @@ MyHashMap.prototype.remove = function(key) {
 //todo (Arrays)
 //! ====================================================================================================================
 
+//1 иницилизируем дину игры && первый элемнт иглы
+//2 запускаем цикл по стогусена если char === наконечнику иглы ? вырезаем подстроку с указанного индекса и сравниваем с иглой
+//3 если подстрока не найдена возвращаем -1
+
+
 var strStr = function(haystack, needle) {
-    
+	let strLength = needle.length
+	let firstChar = needle[0]
+
+	for(let i = 0; i < haystack.length; i++) {
+		if (haystack[i] === firstChar) {
+			let subStr = haystack.slice(i, i + strLength)
+			if (subStr === needle){
+				return i
+			} 
+		}
+	}
+	return -1
 };
 
-console.log(strStr("sadbutsad", "sad"))
-console.log(strStr("leetcode", "leeto"))
+console.log(strStr("sadbutsad", "sad")) // 0
+console.log(strStr("abcdabgfa", "abg")) // 4
+console.log(strStr("leetcode", "leeto")) // -1
 
 //! ====================================================================================================================
+
 //* 1822. Sign of the Product of an Array
 
 //todo Существует функция SignFunc(x), которая возвращает:
@@ -1397,6 +1442,7 @@ console.log(strStr("leetcode", "leeto"))
 //todo Return signFunc(product).
 
 //todo (Arrays)
+
 //! ====================================================================================================================
 
 var arraySign = function(nums) {
