@@ -1445,8 +1445,46 @@ console.log(strStr("leetcode", "leeto")) // -1
 
 //! ====================================================================================================================
 
+//1 запускаем реверсивный цикл
+	//1.1 let newNum = nums[i] * nums[i-1]
+	//1.2 nums.push(newNum)
+//2 делаем проверку и возвращаем результат
+
 var arraySign = function(nums) {
-    
+
+    for(let i = nums.length-1; i > 0; i--) {
+		let nuwNum = nums.pop() * nums.pop()
+		nums.push(nuwNum)
+		console.log(nums)
+	}
+
+	if (nums[0] > 0) {
+		return 1
+	} else if (nums[0] < 0) {
+		return -1
+	} else {
+		return 0
+	}
+};
+
+console.log(arraySign([-1,-2,-3,-4,3,2,1])) // 1
+console.log(arraySign([1,5,0,2,-3])) // 0
+console.log(arraySign([-1,1,-1,1,-1])) // -1
+
+//!---------------------------------------------------------------------------------------------------------------------
+
+var arraySign = function(nums) {
+    let isNegativeProduct = false;
+
+    for (let num of nums) {
+        if (num === 0) {
+            return 0;
+        } else if (num < 0) {
+            isNegativeProduct = !isNegativeProduct;
+        }
+    }
+
+    return isNegativeProduct ? -1 : 1;
 };
 
 console.log(arraySign([-1,-2,-3,-4,3,2,1])) // 1
@@ -1464,12 +1502,29 @@ console.log(arraySign([-1,1,-1,1,-1])) // -1
 //todo (Arrays)
 //! ====================================================================================================================
 
+//1 иницилизируем две колекции для двух массивов и максимальную длину массивов
+//2 запускаем цикл по длине массивов
+	//2.1 
+	//2.2 если в колекции 1 есть nums2.num ? удаляем из массива 
+
+
 var findDifference = function(nums1, nums2) {
-	
+	let len = Math.max(nums1.length, nums2.length)
+	let setOne = new Set(nums1)
+	let setTwo = new Set(nums2)
+
+	for(let j = 0; j < len; j++) {
+		if (setTwo.delete(nums1[j])) {
+			setOne.delete(nums1[j])
+		}
+	}
+
+	return [[...setOne], [...setTwo]]
 };
 
-console.log(findDifference([1,2,3], [2,4,6]))
-console.log(findDifference([1,2,3,3], [1,1,2,2]))
+console.log(findDifference([-68,-80,-19,-94,82,21,-43], [-63])) // [[-68, -80, -19, -94, 82, 21, -43],[-63]]
+console.log(findDifference([1,2,3], [2,4,6])) // [[1,3],[4,6]]
+console.log(findDifference([1,2,3,3], [1,1,2,2])) // [[3],[]]
 
 //! ====================================================================================================================
 //* 1603. Design Parking System
