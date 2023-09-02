@@ -9,13 +9,39 @@
 //todo (Two Pointers)
 //! ====================================================================================================================
 
+//1 убираем из предложения пробелы, спецсимволы и приводим к нижнему регистру
+//2 иницилизируем правый и левый указатели
+//3
+//4
+//Time O(N) | Space O(N)
+
 var isPalindrome = function(s) {
-    
+	if(s.length = 0) { //0(1)
+		return true
+	}
+	let str = s.toLowerCase().replace(/[^a-z0-9]/g, "") //0(N)
+	let strArr = str.split('')
+  	let [left, right] = [0, str.length -1]
+
+	while(left < right) { //0(N)
+		[strArr[left], strArr[right]] = [strArr[right], strArr[left]]
+		left++ 
+		right--
+	}
+
+	let strTwo = strArr.join('') //0(N)
+	if(str === strTwo) { //0(1)
+		return true
+	} return false
 };
 
-console.log(isPalindrome("A man, a plan, a canal: Panama")) // true
 console.log(isPalindrome("race a car")) // false
-console.log(isPalindrome(" ")) // true
+console.log(isPalindrome("A man, a plan, a canal: Panama")) // true
+console.log(isPalindrome("0P")) // true
+console.log(isPalindrome("abba")) // true
+console.log(isPalindrome("abx")) // false
+console.log(isPalindrome("race a car")) // false
+
 
 //! ====================================================================================================================
 //* 680. Valid Palindrome II
@@ -25,9 +51,32 @@ console.log(isPalindrome(" ")) // true
 //todo (Two Pointers)
 //! ====================================================================================================================
 
+//1 иницилизируем дваукзателя left right 
+//2 запускаем цикл по строке
+	//2.1 если left !== right && counter ? удаляем чило из строки и counter = 0 : перестовляем элемнты местами
+	//2.2
+//3
+//4
+//5
+
 var validPalindrome = function(s) {
-    
+    let [left, right] = [0, high = s.length-1]
+    while (left < right) {
+        if (s[left] !== s[right]) {
+            return isPalindrome(s, left+1, right) || isPalindrome(s, left, right-1);
+        }
+        left++, right--;
+    }
+    return true;
 };
+
+function isPalindrome(str, left, right) {
+    while (left < right) {
+        if (str[left] !== str[right]) return false;
+        left++, right--;
+    }
+    return true;
+}
 
 console.log(validPalindrome("aba")) // true
 console.log(validPalindrome("abca")) // true
@@ -46,11 +95,11 @@ console.log(validPalindrome("abc")) // false
 //! ====================================================================================================================
 
 var minimumDifference = function(nums, k) {
-    
+
 };
 
-console.log(minimumDifference([90], 1))
-console.log(minimumDifference([9,4,1,7], 2))
+console.log(minimumDifference([90], 1)) // 0
+console.log(minimumDifference([9,4,1,7], 2)) // 2
 
 //! ====================================================================================================================
 //* 1768. Merge Strings Alternately
@@ -63,12 +112,32 @@ console.log(minimumDifference([9,4,1,7], 2))
 //todo (Two Pointers)
 //! ====================================================================================================================
 
+//1 иницилизируем два указателся для двух строк
+//2 иницилизируем массив result
+//3 ищем самыую длинную строку 
+//4 запускаем цикл по самой длинной строке 
+	//4.1 если word1[i] !== undefined ? пушим в массив
+	//4.2 если word2[i] !== undefined ? пушим в массив
+//5 return result.join()
+
 var mergeAlternately = function(word1, word2) {
-    
+   let result = ''
+   let leng = Math.max(word1.length, word2.length)
+
+	for(let i = 0; i < leng; i++) {
+		if(word1[i] !== undefined) {
+			result += word1[i]
+		}
+		if(word2[i] !== undefined) {
+			result += word2[i]
+		}
+	}
+
+	return result
 };
 
-console.log(mergeAlternately("abc", "pqr")) // "apbqcr"
-console.log(mergeAlternately("ab", "pqrs")) // "apbqrs"
+console.log(mergeAlternately("abc", "pqr")) // "apbqcr" 
+console.log(mergeAlternately("ab", "pqrs")) // "apbqrs" 
 console.log(mergeAlternately("abcd", "pq")) // "apbqcd"
 
 //! ====================================================================================================================
@@ -81,8 +150,21 @@ console.log(mergeAlternately("abcd", "pq")) // "apbqcd"
 //todo (Two Pointers)
 //! ====================================================================================================================
 
-var reverseString = function(s) {
+//1 иницилизируем два указателя 
+//2 запускаем цикл wilde (left < right)
+	// в s меняем значения местами 
+//3 return s
 
+
+var reverseString = function(s) {
+	let [left, right] = [0, s.length-1]
+
+	while(left < right){
+		[s[left], s[right]] = [s[right], s[left]]
+		left++
+		right--
+	}
+	return s
 };
 
 console.log(reverseString(["h","e","l","l","o"]))  // ["o","l","l","e","h"]
@@ -102,6 +184,12 @@ console.log(reverseString(["H","a","n","n","a","h"]))  // ["h","a","n","n","a","
 
 //todo (Two Pointers)
 //! ====================================================================================================================
+
+//1
+//2
+//3
+//4
+//5
 
 var merge = function(nums1, m, nums2, n) {
     
