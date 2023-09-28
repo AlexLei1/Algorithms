@@ -1,5 +1,0 @@
-1. Полный перебор - https://habr.com/ru/articles/247857/
-2. разделяй и влавствуй - https://habr.com/ru/companies/otus/articles/599309/
-3. поиск в глубину и ширину - https://habr.com/ru/articles/504374/
-4. скользящее окно - https://digitrain.ru/articles/95913/
-
